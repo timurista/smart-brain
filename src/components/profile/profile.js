@@ -9,6 +9,18 @@ class Profile extends React.Component {
     pet: this.props.user.pet || '',  
   }
 
+  onProfileUpdate = (data) => {
+    console.log(data)
+    fetch(`http://localhost:3000/profile/${this.props.user.id}`, {
+      method: 'post',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({ formInput: data })
+    }).then(res => {
+      this.props.toggleModal();
+      this.props.loadUser({...this.props.user, ...data});
+    }).catch(e => console.log(e))
+  }
+
   onFormChange = event => {
     switch(event.target.name) {
       case 'name':
@@ -69,7 +81,7 @@ class Profile extends React.Component {
             <div className="mt4" style={{ display: 'flex', justifyContent: 'space-evenly'}}>
               <button 
                 className='b pa2 grow pointer hover-white w-40 bg-light-blue b--black-20'
-                onClick={toggleModal}
+                onClick={() => this.onProfileUpdate({ name, age, pet })}
               >
                 Save
               </button>
