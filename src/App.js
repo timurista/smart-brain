@@ -51,7 +51,8 @@ class App extends Component {
       name: data.name,
       email: data.email,
       entries: data.entries,
-      joined: data.joined
+      joined: data.joined,
+      ...data
     }})
   }
 
@@ -139,7 +140,7 @@ class App extends Component {
         />
         { isProfileOpen && (
           <Modal>
-            <Profile isProfileOpen={isProfileOpen} toggleModal={this.toggleModal} user={this.state.user}/>
+            <Profile loadUser={this.loadUser} toggleModal={this.toggleModal} user={this.state.user}/>
           </Modal>
         )}
         { route === 'home'
